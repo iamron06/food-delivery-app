@@ -16,7 +16,7 @@ const RestaurantCard = (props) => {
   // } = resData?.data;
   } = resData;
 
-  console.log(resData);
+  // console.log(resData);
 
   return (
     <div className="res-card" style={{ backgroundColor: "#f0f0f0" }}>
@@ -28,7 +28,7 @@ const RestaurantCard = (props) => {
       <h3>{name}</h3>
       <h4>{availability.nextCloseTime}</h4>
       <h4>{cuisines.join(", ")}</h4>
-      <h4>{avgRating} stars</h4>
+      <h4>{avgRating} ✭</h4>
       <h4>{costForTwo}</h4>
       <h4>{sla.lastMileTravel} kms - {sla.deliveryTime} minutes</h4>
     </div>
