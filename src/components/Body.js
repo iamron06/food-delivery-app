@@ -69,7 +69,7 @@ const Body = () => {
           onClick={() => {
             const filteredList = listOfRestaurants.filter((res) => {
                 console.log('AVG' ,res.info.avgRating )
-             return Number(res.info.avgRating) > 4.4
+             return (res.info.avgRating) > 4.4
             
               }
               
@@ -79,7 +79,7 @@ const Body = () => {
             );
            
            
-            setListOfRestraunt(filteredList);
+            setFilteredRestaurant(filteredList);
           }}
         >
           Top Rated Restaurants
