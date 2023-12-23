@@ -2,7 +2,10 @@ import React , { useState, useEffect } from 'react'
 import RestaurantCard from "./RestaurantCard";
 import { Link } from 'react-router-dom';
 
+
 import Shimmer from "./Shimmer";
+import useOnlineStatus from '../utils/useOnlineStatus';
+import OfflineError from './OfflineError';
 
 const Body = () => {
   // Local State Variable - Super powerful variable
@@ -21,7 +24,8 @@ const Body = () => {
   }, []);
 
    const onResetRestaurant = () => setFilteredRestaurant(listOfRestaurants)
-
+    const onlineStatus =useOnlineStatus();
+    if(onlineStatus === false) return (<div> <OfflineError /></div>)
 
   const fetchData = async () => {
     const data = await fetch(
@@ -34,9 +38,7 @@ const Body = () => {
     setListOfRestraunt(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     // console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     //  setFilteredRestaurant(json?.data?.cards[2]?.data?.data?.cards);
-    setFilteredRestaurant(
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+    setFilteredRestaurant(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
   console.log(listOfRestaurants[0]?.info?.avgRating);
   return listOfRestaurants.length === 0 ? (

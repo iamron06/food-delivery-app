@@ -28,7 +28,7 @@ const { resId } = useParams();
     console.log(resInfo)
 
   const { itemCards } =
-  resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+  resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
   console.log(itemCards);
 
