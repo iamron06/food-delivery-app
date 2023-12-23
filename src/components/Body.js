@@ -11,12 +11,17 @@ const Body = () => {
 
   const [searchText, setSearchText] = useState("");
 
+
+
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
   console.log("Body Rendered");
 
   useEffect(() => {
     fetchData();
   }, []);
+
+   const onResetRestaurant = () => setFilteredRestaurant(listOfRestaurants)
+
 
   const fetchData = async () => {
     const data = await fetch(
@@ -69,23 +74,19 @@ const Body = () => {
           onClick={() => {
             const filteredList = listOfRestaurants.filter((res) => {
                 console.log('AVG' ,res.info.avgRating )
-             return (res.info.avgRating) > 4.4
-            
-              }
-              
-              
-              
-              
-            );
-           
-           
-            setFilteredRestaurant(filteredList);
-          }}
-        >
-          Top Rated Restaurants
+             return (res.info.avgRating) > 4.3
+             } );
+             setFilteredRestaurant(filteredList);  
+            }} >
+               Top Rated Restaurants
         </button>
-      </div>
-      <div className="res-container">
+
+         <button className="filter-btn"
+         onClick={onResetRestaurant}>
+          List of All Restaurants
+          </button>     
+          </div>  
+           <div className="res-container">
         {filteredRestaurant.map((restaurant) => (
           // <RestaurantCard key={restaurant?.info.id} resData={restaurant?.info} />
           <Link

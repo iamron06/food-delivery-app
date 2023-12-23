@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
+import { CDN_URL } from '../utils/constants';
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
@@ -21,7 +22,7 @@ const RestaurantMenu = () => {
 
   if (resInfo === null) return <Shimmer />;
 
-  const { name, cuisines, costForTwo } =
+  const { name, cuisines, costForTwo} =
   resInfo?.cards[0]?.card?.card?.info;
     console.log(resInfo)
 
@@ -34,7 +35,8 @@ const RestaurantMenu = () => {
     <div className="menu">
       <h1>{name}</h1>
       <p>
-        {cuisines.join(", ")} - {costForTwo}
+     
+        {cuisines.join(", ")} - ₹ {costForTwo} for two
       </p>
       <h2>Menu</h2>
       <ul>
