@@ -19,7 +19,7 @@ const Header = () => {
           <li>About Us</li>
           <li>Contact Us</li>
           <li>Cart</li> */}
-           <li>Online Status : {onlineStatus?"🟢":"🔴"}</li>
+           <li>{onlineStatus?"Online🟢":"Offline🔴"}</li>
            <li>
             <Link to="/">Home</Link>
           </li>
