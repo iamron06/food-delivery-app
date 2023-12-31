@@ -1,26 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { CDN_URL } from '../utils/constants';
 import { useParams } from "react-router-dom";
 // import { MENU_API } from "../utils/constants";
-// import { CDN_URL } from '../utils/constants';
 import useRestauratMenu from '../utils/useRestaurantMenu';
+import RestaurantCategory from './RestaurantCategory';
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
 const { resId } = useParams();
 
-  // useEffect(() => {
-  //   fetchMenu();
-  // }, []);
-
-  // const fetchMenu = async () => {
-  //   const data = await fetch(MENU_API + resId);
-  //   const json = await data.json();
-  //   setResInfo(json.data);
-  // };
   const resInfo = useRestauratMenu(resId);
+  const [showIndex, setShowIndex] = useState(null)
 
   if (resInfo === null) return <Shimmer />;
 
@@ -35,23 +27,29 @@ const { resId } = useParams();
   // .map((card)=> card.card.card.itemCards )
     
   // console.log(itemCards)
-  const titles = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((card)=>card?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
-  console.log(titles);
+  const categories = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((card)=>card?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
+  console.log(categories);
 
- const a = titles.map((t)=>t.card.card.itemCards);
- console.log(a);
- console.log(a[0][0].card.info.name);
- const b = (a.map((innerArray)=>innerArray.map((item) => item?.card?.info)))
+ const an = categories.map((t)=>t.card.card.itemCards);
+ console.log(an);
+//  console.log(an[0][0].card.info.name);
+ const b = (an.map((innerArray)=>innerArray.map((item) => item?.card?.info)))
  console.log(b);
- console.log(b.map((item) => item?.name))
+//  console.log(b.map((item) => item?.name))
 
-
-  // const {itemCards1} = itemCards.flatMap((card) => card.card.card.itemCards || []).map((card) => card.card.itemCards);
-
-  // const {itemCards1} = itemCards[2].card[2].card.info.name
-
-  // console.log(itemCards1)
-  
+// Higher order component: 
+//  const isBestSeller = (an) => {
+//   return (props) => {
+//     const bestSeller = props?.info.isBestseller===true
+//     const additionalProps = {
+//       isBestSeller: isBestSeller,
+//     };
+//     const mergedProps = { ...props, ...additionalProps };
+    
+//     return <an {...mergedProps}/>
+    
+  // }}
+ 
   return (
     <div className="menu">
       <h1>{name}</h1>
@@ -59,16 +57,17 @@ const { resId } = useParams();
      
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
-      <h2>Menu</h2>
-      <div className="res-container" >
-        {/* {itemCards.map((item) => (
-          <li key={item.card.info.id}>
-            {item.card.info.name} -{" Rs."}
-            {item.card.info.price / 100 || item.card.info.defaultPrice / 100}
-          </li>
-        ))} */}
-
-        {a.map((innerArray)=>innerArray.map((item)=>
+      {/* Accordions */}
+      {categories.map((category, index) => 
+      <RestaurantCategory 
+      key={category?.card?.card?.title} 
+      data={category?.card?.card} 
+      showItems ={index === showIndex ? true : false}
+      setShowIndex={()=> setShowIndex(index)}
+      />)}
+      {/* <h2>Menu</h2> */}
+      {/* <div className="res-container" > */}
+        {/* {an.map((innerArray)=>innerArray.map((item)=>
         
         <ul className="res-card" style={{ backgroundColor: "#f0f0f0" }} key={item?.card?.info?.id} >
           <img
@@ -78,10 +77,11 @@ const { resId } = useParams();
       />
           {item?.card?.info?.name} -{" Rs."}
           {item?.card?.info?.price / 100 || item?.card?.info?.defaultPrice / 100}
-        </ul>
+          {/* {isBestSeller && <p>Best Seller!</p>} */}
+        {/* /* </ul> */}
 
-        ))}
-      </div>
+        {/* ))}  */}
+      {/* </div> */}
     </div>
   );
 };
