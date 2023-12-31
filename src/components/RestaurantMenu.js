@@ -1,6 +1,7 @@
 import React from 'react'
 // import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { CDN_URL } from '../utils/constants';
 import { useParams } from "react-router-dom";
 // import { MENU_API } from "../utils/constants";
 // import { CDN_URL } from '../utils/constants';
@@ -40,7 +41,9 @@ const { resId } = useParams();
  const a = titles.map((t)=>t.card.card.itemCards);
  console.log(a);
  console.log(a[0][0].card.info.name);
- console.log(a.map((innerArray)=>innerArray.map((item) => item?.card?.info?.name)))
+ const b = (a.map((innerArray)=>innerArray.map((item) => item?.card?.info)))
+ console.log(b);
+ console.log(b.map((item) => item?.name))
 
 
   // const {itemCards1} = itemCards.flatMap((card) => card.card.card.itemCards || []).map((card) => card.card.itemCards);
@@ -57,7 +60,7 @@ const { resId } = useParams();
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
       <h2>Menu</h2>
-      <ul>
+      <div className="res-container" >
         {/* {itemCards.map((item) => (
           <li key={item.card.info.id}>
             {item.card.info.name} -{" Rs."}
@@ -66,13 +69,19 @@ const { resId } = useParams();
         ))} */}
 
         {a.map((innerArray)=>innerArray.map((item)=>
-        <li key={item?.card?.info?.id} >
+        
+        <ul className="res-card" style={{ backgroundColor: "#f0f0f0" }} key={item?.card?.info?.id} >
+          <img
+        className="res-logo"
+        alt="res-logo"
+        src={CDN_URL + item?.card?.info?.imageId}
+      />
           {item?.card?.info?.name} -{" Rs."}
           {item?.card?.info?.price / 100 || item?.card?.info?.defaultPrice / 100}
-        </li>
+        </ul>
 
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

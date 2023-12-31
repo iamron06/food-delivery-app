@@ -40,7 +40,8 @@ const Body = () => {
     //  setFilteredRestaurant(json?.data?.cards[2]?.data?.data?.cards);
     setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
-  console.log(listOfRestaurants[0]?.info?.avgRating);
+  // console.log(listOfRestaurants[0]?.info?.avgRating);
+  console.log(listOfRestaurants)
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
